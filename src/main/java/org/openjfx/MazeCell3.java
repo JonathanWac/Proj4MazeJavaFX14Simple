@@ -2,8 +2,9 @@ package org.openjfx;
 
 import javafx.scene.shape.Line;
 
-public class MazeCell {
-    Line bottom, right;
+public class MazeCell3 {
+
+    public Line bottom, right;
 
     public void setLines(double leftXCord, double rightXCord, double topYCord, double botYCord){
         setBottom(leftXCord, botYCord, rightXCord, botYCord);

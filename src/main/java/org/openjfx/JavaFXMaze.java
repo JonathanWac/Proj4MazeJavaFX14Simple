@@ -1,11 +1,22 @@
+//=====================================================================================================================
+// Name        : JavaFXMaze.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 3345.002 Fall 2020
+// Version     : 1.0
+// Copyright   : Nov. 2020
+// Description :
+//         The main Application class which takes in the primaryStage passed from App.java, and will generate
+//      a maze scene on the given Stage. Maze can be generated either from its value constructor, which will take
+//      in custom values for the Maze's cellWidth and cellHeight, as well as another constructor which also takes
+//      in a parameter for the cell's pixel amount.
+//=====================================================================================================================
+
 package org.openjfx;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,11 +25,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.Vector;
 
 public class JavaFXMaze {
@@ -58,7 +67,7 @@ public class JavaFXMaze {
         //mainScene = new Scene(new StackPane(new Label("Test Label")), 640, 480);
     }
 
-    public void generateMaze(){
+    private void generateMaze(){
         Scene maze;
         BorderPane borderPane = new BorderPane();
         Group group = generateMazeGroup();
@@ -76,7 +85,7 @@ public class JavaFXMaze {
         mainStage.setScene(maze);
     }
 
-    public VBox constructTopBorder(){
+    private VBox constructTopBorder(){
         VBox mainVBox = new VBox();
             mainVBox.setAlignment(Pos.CENTER);
             Label inputPrompt1 = new Label("Enter a new size below to generate a new maze");
@@ -132,7 +141,7 @@ public class JavaFXMaze {
         return mainVBox;
     }
 
-    public void connectMaze(){
+    private void connectMaze(){
         if (cellArr.length > 0 && cellArr[0].length > 0){
             if (cellArr.length == 1 && cellArr[0].length == 1){
 
@@ -499,7 +508,8 @@ public class JavaFXMaze {
     }
 
     //Improved efficiency
-    public void connectMazeV2(){
+    //  Not fully working, aka Defunct function
+    private void connectMazeV2(){
         if (cellArr.length > 0 && cellArr[0].length > 0){
             if (cellArr.length == 1 && cellArr[0].length == 1){
 
@@ -895,11 +905,11 @@ public class JavaFXMaze {
         }
     }
 
-    public void uniteIndexes(DisjSets sets, int index1, int index2){
+    private void uniteIndexes(DisjSets sets, int index1, int index2){
         sets.union(sets.find(index1), sets.find(index2));
     }
 
-    public int findMaximalParent(DisjSets sets, int childIndex){
+    private int findMaximalParent(DisjSets sets, int childIndex){
         /*int maxParent = childIndex, tempNum = sets.find(childIndex);
         while (sets.find(maxParent) != maxParent){
             maxParent = sets.find(maxParent);
@@ -925,7 +935,7 @@ public class JavaFXMaze {
         return (int)(Math.random() * range) + min;
     }
 
-    public Group generateMazeGroup(){
+    private Group generateMazeGroup(){
         Group group = new Group();
         MazeCell[][] cellArr = new MazeCell[cellsWidth][cellsHeight];
         var groupChildren = group.getChildren();
@@ -961,7 +971,7 @@ public class JavaFXMaze {
         return group;
     }
 
-    public MazeCell[][] generateMazeCellArr(){
+    private MazeCell[][] generateMazeCellArr(){
         MazeCell[][] cellArr = new MazeCell[cellsWidth][cellsHeight];
         for (int w = 0; w < cellsWidth; w++){
             for (int h = 0; h < cellsHeight; h++){
@@ -974,7 +984,7 @@ public class JavaFXMaze {
         return cellArr;
     }
 
-    public Scene getMainScene(){
+    private Scene getMainScene(){
         return mainScene;
     }
 
@@ -1016,6 +1026,24 @@ public class JavaFXMaze {
             this.cellsHeight = MAZE_DEFAULTS.cellsAmountHeight;
             System.err.printf("Tried to set the cellsVertical value to '%s' something less than 0..." +
                     "\n\tNow setting cellsVertical to its default value of: %s ", cellsHeight, this.cellsHeight);
+        }
+    }
+
+    private static class MazeCell {
+
+        Line bottom, right;
+
+        void setLines(double leftXCord, double rightXCord, double topYCord, double botYCord){
+            setBottom(leftXCord, botYCord, rightXCord, botYCord);
+            setRight(rightXCord, topYCord, rightXCord, botYCord);
+        }
+
+        void setBottom(double x1, double y1, double x2, double y2) {
+            this.bottom = new Line(x1, y1, x2, y2);
+        }
+
+        void setRight(double x1, double y1, double x2, double y2) {
+            this.right = new Line(x1, y1, x2, y2);
         }
     }
 }

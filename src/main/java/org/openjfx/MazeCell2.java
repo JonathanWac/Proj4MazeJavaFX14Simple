@@ -3,7 +3,7 @@ package org.openjfx;
 import javafx.scene.shape.Line;
 
 public class MazeCell2 {
-    Line top, bottom, left, right;
+    private Line top, bottom, left, right;
 
     public void setLines(double leftXCord, double rightXCord, double topYCord, double botYCord){
         setTop(leftXCord, topYCord, rightXCord, topYCord);
